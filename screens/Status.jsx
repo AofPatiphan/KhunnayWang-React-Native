@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     TouchableOpacity,
+    ScrollView,
     View,
     Text,
     SafeAreaView,
@@ -9,44 +10,47 @@ import {
     TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import OrderCard from '../components/OrderCard';
 
 const About = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.safeAreaView}>
-            <View style={styles.container}>
-                <Text style={styles.header}>Check Order Status</Text>
-                <Text style={styles.subHeader}>
-                    Please enter your twitter account to track your order status
-                    (eg. @khunnaywang85)
-                </Text>
-                <TextInput
-                    placeholderTextColor="lightgrey"
-                    style={styles.input}
-                    // value={text}
-                    // onChangeText={setText}
-                    placeholder="@account"
-                    keyboardType="text"
-                />
-                <View style={styles.checkButton}>
-                    <TouchableOpacity
-                        style={styles.orderStatus}
-                        onPress={() => navigation.navigate('Status')}
-                    >
-                        <Text style={styles.orderStatusText}>&nbsp;&nbsp;</Text>
-                        <Text style={styles.orderStatusText}>Check</Text>
-                        <View style={styles.orderStatusIcon}>
-                            <Icon
-                                name={'arrow-forward-outline'}
-                                color={'#FFFFFF'}
-                                size={24}
-                            />
-                        </View>
-                    </TouchableOpacity>
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.header}>Check Order Status</Text>
+                    <Text style={styles.subHeader}>
+                        Please enter your twitter account to track your order
+                        status (eg. @khunnaywang85)
+                    </Text>
+                    <TextInput
+                        placeholderTextColor="lightgrey"
+                        style={styles.input}
+                        // value={text}
+                        // onChangeText={setText}
+                        placeholder="@account"
+                        keyboardType="text"
+                    />
+                    <View style={styles.checkButton}>
+                        <TouchableOpacity style={styles.orderStatus}>
+                            <Text style={styles.orderStatusText}>
+                                &nbsp;&nbsp;
+                            </Text>
+                            <Text style={styles.orderStatusText}>Check</Text>
+                            <View style={styles.orderStatusIcon}>
+                                <Icon
+                                    name={'arrow-forward-outline'}
+                                    color={'#FFFFFF'}
+                                    size={24}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <OrderCard navigation={navigation} />
+                    <OrderCard navigation={navigation} />
+                    <OrderCard navigation={navigation} />
+                    <OrderCard navigation={navigation} />
                 </View>
-                <View style={styles.cardOrder}>
-                    <Text>No.1</Text>
-                </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };
@@ -130,7 +134,27 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.3,
         shadowRadius: 13.0,
-
+        paddingTop: 15,
+        paddingLeft: 30,
+        paddingRight: 30,
         elevation: 17,
+    },
+    orderNumber: {
+        fontSize: 12,
+        color: '#849A83',
+        padding: 4,
+    },
+    orderType: {
+        fontSize: 18,
+        padding: 4,
+    },
+    orderDate: {
+        fontSize: 18,
+        padding: 4,
+    },
+    showMoreDetail: {
+        color: '#849A83',
+        padding: 4,
+        fontSize: 14,
     },
 });
