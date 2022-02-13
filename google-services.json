@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "106591818587",
+    "project_id": "khunnaywang-7ee93",
+    "storage_bucket": "khunnaywang-7ee93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106591818587:android:a45fa8c7144989d0e3c07e",
+        "android_client_info": {
+          "package_name": "com.khunnaywang.coolapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106591818587-gv9uhl6dds38sbk2hjueq8h9o66srajt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvIKtZqxlVFwgrL5-Kbf08qxwpELT5v-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106591818587-gv9uhl6dds38sbk2hjueq8h9o66srajt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "106591818587-pfaco5auc1qakj2ioancmltl0jqkqmbl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.khunnaywang.coolapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
