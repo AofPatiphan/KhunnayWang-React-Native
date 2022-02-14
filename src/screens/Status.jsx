@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     TouchableOpacity,
     ScrollView,
@@ -12,11 +12,28 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import OrderCard from '../components/OrderCard';
-import useFirestore from '../hooks/userFirestore';
+import { projectFirestore, timestamp } from '../firebase/config';
+
+// import useFirestore from '../hooks/userFirestore';
 
 const About = ({ navigation }) => {
-    const { docs } = useFirestore('order');
-    console.log(docs);
+    const [docs, setDocs] = useState([]);
+
+    const handlePress = () => {
+        projectFirestore
+            .collection('order')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot((snap) => {
+                let documents = [];
+                snap.forEach((doc) => {
+                    documents.push({ ...doc.data(), id: doc.id });
+                });
+                setDocs(documents);
+            });
+    };
+
+    // const { docs } = useFirestore('order');
+    // console.log(docs);
 
     const renderItem = ({ item }) => (
         <OrderCard navigation={navigation} item={item} />
@@ -72,7 +89,10 @@ const About = ({ navigation }) => {
                                 keyboardType="text"
                             />
                             <View style={styles.checkButton}>
-                                <TouchableOpacity style={styles.orderStatus}>
+                                <TouchableOpacity
+                                    style={styles.orderStatus}
+                                    onPress={handlePress}
+                                >
                                     <Text style={styles.orderStatusText}>
                                         &nbsp;&nbsp;
                                     </Text>
@@ -106,7 +126,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 35,
+        padding: 30,
     },
     header: {
         fontSize: 25,

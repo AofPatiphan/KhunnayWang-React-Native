@@ -28,6 +28,7 @@ function OrderCard({ item, navigation }) {
                     item,
                 })
             }
+            style={{ alignItems: 'center' }}
         >
             <View style={styles.cardOrder}>
                 <Text style={styles.orderNumber}>NO.{item.number}</Text>
@@ -50,7 +51,7 @@ export default OrderCard;
 const styles = StyleSheet.create({
     cardOrder: {
         marginTop: 30,
-        width: '100%',
+        width: 320,
         height: 145,
         backgroundColor: '#FFFFFF',
         borderRadius: 15,
@@ -60,11 +61,11 @@ const styles = StyleSheet.create({
             height: 12,
         },
         shadowOpacity: 0.3,
-        shadowRadius: 13.0,
+        shadowRadius: 3.0,
         paddingTop: 15,
         paddingLeft: 30,
         paddingRight: 30,
-        elevation: 17,
+        elevation: 10,
     },
     orderNumber: {
         fontSize: 12,

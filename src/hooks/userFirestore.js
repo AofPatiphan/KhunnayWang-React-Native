@@ -5,27 +5,23 @@ const useFirestore = (collection) => {
     const [docs, setDocs] = useState([]);
 
     const testData = {
-        number: 1,
+        number: 2,
         date: new Date(),
         brand: 'Bananain',
         description: {
             for: 'WYB',
             type: 'รองเท้า',
-            color: 'ฟ้า',
-            quantity: '1 Ea',
+            color: 'ดำ',
+            quantity: '2 Ea',
         },
         payment: [
             {
                 amount: 1000,
                 tax: 100,
             },
-            {
-                amount: 200,
-                tax: 20,
-            },
         ],
-        status: 3,
-        trackingNumber: 'TH21942342342',
+        status: 2,
+        trackingNumber: 'TH2395234642',
         remark: 'remark',
         createdAt: timestamp(),
         userId: 'vLe99uy8jcSTlmdRi3bi',
@@ -34,7 +30,7 @@ const useFirestore = (collection) => {
     useEffect(() => {
         const unsub = projectFirestore
             .collection(collection)
-            // .orderBy('createdAt', 'desc')
+            .orderBy('createdAt', 'desc')
             .onSnapshot((snap) => {
                 let documents = [];
                 snap.forEach((doc) => {

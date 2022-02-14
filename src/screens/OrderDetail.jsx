@@ -13,6 +13,24 @@ import IconAnt from 'react-native-vector-icons/AntDesign';
 function OrderDetail({ route }) {
     console.log(route.params.item);
     const detail = route.params.item;
+    console.log(detail);
+
+    let unix_timestamp = detail.createdAt.seconds;
+    // Create a new JavaScript Date object based on the timestamp
+    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+    var date = new Date(unix_timestamp * 1000);
+    // Hours part from the timestamp
+    var hours = date.getHours();
+    // Minutes part from the timestamp
+    var minutes = '0' + date.getMinutes();
+    // Seconds part from the timestamp
+    var seconds = '0' + date.getSeconds();
+
+    // Will display time in 10:30:23 format
+    var formattedTime =
+        hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    console.log(date);
     return (
         <SafeAreaView style={styles.safeAreaView}>
             <View style={styles.cardOrder}>
@@ -21,7 +39,7 @@ function OrderDetail({ route }) {
                 <Text style={styles.orderDate}>
                     Date{' '}
                     <Text style={{ color: 'grey' }}>
-                        &nbsp;&nbsp;30 Nov 2020
+                        &nbsp;&nbsp;{date.toISOString().split('T')[0]}
                     </Text>
                 </Text>
                 <Text style={styles.brand}>
@@ -66,10 +84,12 @@ function OrderDetail({ route }) {
                     {detail.payment.map((item, i) => {
                         return (
                             <View key={i}>
-                                <Text style={styles.brand}>{i + 1} times</Text>
+                                {/* <Text style={styles.brand}>
+                                    {detail.payment.length} times
+                                </Text> */}
                                 <View style={styles.paymentDetail}>
                                     <Text style={styles.descriptionDetail}>
-                                        {item.amount} Bath
+                                        amount&nbsp;&nbsp; {item.amount} Bath
                                     </Text>
                                     <View style={styles.checkIcon}>
                                         <Icon
@@ -81,7 +101,8 @@ function OrderDetail({ route }) {
                                 </View>
                                 <View style={styles.paymentDetail}>
                                     <Text style={styles.descriptionDetail}>
-                                        {item.tax} Bath
+                                        Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp; {item.tax} Bath
                                     </Text>
                                     <View style={styles.checkIcon}>
                                         <Icon
@@ -94,31 +115,6 @@ function OrderDetail({ route }) {
                             </View>
                         );
                     })}
-                    {/* <Text style={styles.brand}>2 times</Text> */}
-                    {/* <View style={styles.paymentDetail}>
-                        <Text style={styles.descriptionDetail}>
-                            1 _ _ _ _ Bath
-                        </Text>
-                        <View style={styles.checkedIcon}>
-                            <Icon
-                                name={'ios-checkmark-outline'}
-                                color={'#ffffff'}
-                                size={20}
-                            />
-                        </View>
-                    </View> */}
-                    {/* <View style={styles.paymentDetail}>
-                        <Text style={styles.descriptionDetail}>
-                            2 _ _ _ _ Bath
-                        </Text>
-                        <View style={styles.checkIcon}>
-                            <Icon
-                                name={'ios-checkmark-outline'}
-                                color={'#ffffff'}
-                                size={20}
-                            />
-                        </View>
-                    </View> */}
                 </View>
 
                 {/* Status */}
