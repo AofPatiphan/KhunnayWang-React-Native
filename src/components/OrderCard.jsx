@@ -3,23 +3,13 @@ import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 function OrderCard({ item, navigation }) {
-    console.log(item);
     let unix_timestamp = item.createdAt.seconds;
-    // Create a new JavaScript Date object based on the timestamp
-    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
     var date = new Date(unix_timestamp * 1000);
-    // Hours part from the timestamp
     var hours = date.getHours();
-    // Minutes part from the timestamp
     var minutes = '0' + date.getMinutes();
-    // Seconds part from the timestamp
     var seconds = '0' + date.getSeconds();
-
-    // Will display time in 10:30:23 format
     var formattedTime =
         hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-
-    console.log(date);
 
     return (
         <TouchableOpacity
@@ -31,7 +21,19 @@ function OrderCard({ item, navigation }) {
             style={{ alignItems: 'center' }}
         >
             <View style={styles.cardOrder}>
-                <Text style={styles.orderNumber}>NO.{item.number}</Text>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Text style={styles.orderNumber}>NO.{item.number}</Text>
+                    {item.status === 5 ? (
+                        <Text style={styles.orderNumber}>Done</Text>
+                    ) : (
+                        <></>
+                    )}
+                </View>
                 <Text style={styles.orderType}>
                     ORDER {item.description.type}
                 </Text>

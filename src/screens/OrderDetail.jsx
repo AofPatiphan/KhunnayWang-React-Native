@@ -11,22 +11,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 
 function OrderDetail({ route }) {
-    console.log(route.params.item);
     const detail = route.params.item;
-    console.log(detail);
 
     let unix_timestamp = detail.createdAt.seconds;
-    // Create a new JavaScript Date object based on the timestamp
-    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
     var date = new Date(unix_timestamp * 1000);
-    // Hours part from the timestamp
     var hours = date.getHours();
-    // Minutes part from the timestamp
     var minutes = '0' + date.getMinutes();
-    // Seconds part from the timestamp
     var seconds = '0' + date.getSeconds();
-
-    // Will display time in 10:30:23 format
     var formattedTime =
         hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
@@ -88,10 +79,24 @@ function OrderDetail({ route }) {
                                     {detail.payment.length} times
                                 </Text> */}
                                 <View style={styles.paymentDetail}>
-                                    <Text style={styles.descriptionDetail}>
-                                        amount&nbsp;&nbsp; {item.amount} Bath
+                                    <Text
+                                        style={{
+                                            marginLeft: 20,
+                                            // marginRight:
+                                        }}
+                                    >
+                                        amount
                                     </Text>
-                                    <View style={styles.checkIcon}>
+                                    <Text style={{ marginRight: 10 }}>
+                                        {item.amount.price} Bath
+                                    </Text>
+                                    <View
+                                        style={
+                                            item.amount.status
+                                                ? styles.checkedIcon
+                                                : styles.checkIcon
+                                        }
+                                    >
                                         <Icon
                                             name={'ios-checkmark-outline'}
                                             color={'#ffffff'}
@@ -100,11 +105,32 @@ function OrderDetail({ route }) {
                                     </View>
                                 </View>
                                 <View style={styles.paymentDetail}>
-                                    <Text style={styles.descriptionDetail}>
-                                        Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp; {item.tax} Bath
-                                    </Text>
-                                    <View style={styles.checkIcon}>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                marginLeft: 20,
+                                                marginRight: 25,
+                                            }}
+                                        >
+                                            freight
+                                        </Text>
+                                        <Text>{item.tax.price} Bath</Text>
+                                    </View>
+                                    {/* <Text style={styles.descriptionDetail}>
+                                        freight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {item.tax} Bath
+                                    </Text> */}
+                                    <View
+                                        style={
+                                            item.tax.status
+                                                ? styles.checkedIcon
+                                                : styles.checkIcon
+                                        }
+                                    >
                                         <Icon
                                             name={'ios-checkmark-outline'}
                                             color={'#ffffff'}
@@ -121,7 +147,26 @@ function OrderDetail({ route }) {
                 <View style={styles.status}>
                     <Text style={styles.header}>STATUS</Text>
                     <View style={styles.backgroundStatusSlider}>
-                        <View style={styles.statusSlider}>
+                        <View
+                            style={{
+                                width: `${
+                                    detail.status === 1
+                                        ? '0%'
+                                        : detail.status === 2
+                                        ? '25%'
+                                        : detail.status === 3
+                                        ? '50%'
+                                        : detail.status === 4
+                                        ? '75%'
+                                        : detail.status === 5
+                                        ? '100%'
+                                        : ''
+                                }`,
+                                height: 5,
+                                borderRadius: 10,
+                                backgroundColor: '#738C72',
+                            }}
+                        >
                             <Text>&nbsp;</Text>
                         </View>
                     </View>
@@ -137,48 +182,106 @@ function OrderDetail({ route }) {
                         <View style={styles.statusIcon}>
                             <IconAnt
                                 name={'home'}
-                                color={'#738C72'}
+                                color={`${
+                                    detail.status > 1 ? '#738C72' : '#42434730'
+                                }`}
                                 size={24}
                             />
-                            <Text style={styles.statusIconLabel}>China's</Text>
-                            <Text style={styles.statusIconLabel}>
+                            <Text
+                                style={
+                                    detail.status > 1
+                                        ? styles.statusIconLabel
+                                        : styles.statusIconLabelPending
+                                }
+                            >
+                                China's
+                            </Text>
+                            <Text
+                                style={
+                                    detail.status > 1
+                                        ? styles.statusIconLabel
+                                        : styles.statusIconLabelPending
+                                }
+                            >
                                 warehouse
                             </Text>
                         </View>
                         <View style={styles.statusIcon}>
                             <IconAnt
                                 name={'home'}
-                                color={'#738C72'}
+                                color={`${
+                                    detail.status > 2 ? '#738C72' : '#42434730'
+                                }`}
                                 size={24}
                             />
-                            <Text style={styles.statusIconLabel}>
+                            <Text
+                                style={
+                                    detail.status > 2
+                                        ? styles.statusIconLabel
+                                        : styles.statusIconLabelPending
+                                }
+                            >
                                 Thailand's
                             </Text>
-                            <Text style={styles.statusIconLabel}>
+                            <Text
+                                style={
+                                    detail.status > 2
+                                        ? styles.statusIconLabel
+                                        : styles.statusIconLabelPending
+                                }
+                            >
                                 warehouse
                             </Text>
                         </View>
                         <View style={styles.statusIcon}>
                             <Icon
                                 name={'ios-location-sharp'}
-                                color={'#42434730'}
+                                color={`${
+                                    detail.status > 3 ? '#738C72' : '#42434730'
+                                }`}
                                 size={24}
                             />
-                            <Text style={styles.statusIconLabelPending}>
-                                Ordered
+                            <Text
+                                style={
+                                    detail.status > 3
+                                        ? styles.statusIconLabel
+                                        : styles.statusIconLabelPending
+                                }
+                            >
+                                Delivered
                             </Text>
                         </View>
                         <View style={styles.statusIcon}>
                             <Icon
                                 name={'person'}
-                                color={'#42434730'}
+                                color={`${
+                                    detail.status > 4 ? '#738C72' : '#42434730'
+                                }`}
                                 size={24}
                             />
-                            <Text style={styles.statusIconLabelPending}>
-                                Ordered
+                            <Text
+                                style={
+                                    detail.status > 4
+                                        ? styles.statusIconLabel
+                                        : styles.statusIconLabelPending
+                                }
+                            >
+                                Done
                             </Text>
                         </View>
                     </View>
+                </View>
+
+                {/* Result */}
+                <View style={styles.result}>
+                    <Text style={styles.header}>TRACKING NO.</Text>
+                    <Text style={styles.descriptionDetail}>
+                        {detail.trackingNumber}
+                    </Text>
+                    <Text style={styles.header}>REMARK NO.</Text>
+                    <Text style={styles.descriptionDetail}>
+                        {detail.remark}
+                    </Text>
                 </View>
             </View>
         </SafeAreaView>
@@ -273,13 +376,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#DADADA',
     },
     statusSlider: {
-        width: '50%',
         height: 5,
         borderRadius: 10,
         backgroundColor: '#738C72',
     },
     status: {
         width: '100%',
+        marginBottom: 20,
     },
     statusIcon: {
         // flex: 1,
@@ -297,5 +400,9 @@ const styles = StyleSheet.create({
     statusIconLabelPending: {
         fontSize: 12,
         color: '#42434730',
+    },
+    result: {
+        padding: 4,
+        fontSize: 14,
     },
 });

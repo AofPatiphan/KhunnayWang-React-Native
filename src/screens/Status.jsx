@@ -18,22 +18,72 @@ import { projectFirestore, timestamp } from '../firebase/config';
 
 const About = ({ navigation }) => {
     const [docs, setDocs] = useState([]);
+    const [user, setUser] = useState('');
 
-    const handlePress = () => {
+    const testData = {
+        number: 2,
+        date: new Date(),
+        brand: 'Samsung',
+        description: {
+            for: 'WYB',
+            type: 'โทรศัพท์',
+            color: 'ดำ',
+            quantity: '1 Ea',
+        },
+        payment: [
+            {
+                amount: { price: 30000, status: true },
+                tax: { price: 400, status: true },
+            },
+        ],
+        status: 5,
+        trackingNumber: 'TH2395234642',
+        remark: 'remark',
+        createdAt: timestamp(),
+        userId: '2bfS3EPU3d5XyzU4wutd',
+    };
+    // projectFirestore.collection('order').add(testData);
+
+    const handlePress = async () => {
+        // projectFirestore
+        //     .collection('users')
+        //     .orderBy('createdAt', 'desc')
+        //     .onSnapshot((snap) => {
+        //         let documents = [];
+        //         snap.forEach((doc) => {
+        //             documents.push({ ...doc.data(), id: doc.id });
+        //         });
+        //         setDocs(documents);
+        //     });
+        let userIdTemp = '';
+
+        const querySnapshot = await projectFirestore
+            .collection('users')
+            .where('name', '==', user)
+            .get();
+
+        querySnapshot.forEach((doc) => {
+            console.log('in snap', doc.id);
+            userIdTemp = doc.id;
+        });
+
+        console.log('userId: ', userIdTemp);
         projectFirestore
             .collection('order')
-            .orderBy('createdAt', 'desc')
-            .onSnapshot((snap) => {
+            .where('userId', '==', userIdTemp)
+            .get()
+            .then((querySnapshot) => {
                 let documents = [];
-                snap.forEach((doc) => {
+
+                querySnapshot.forEach((doc) => {
                     documents.push({ ...doc.data(), id: doc.id });
                 });
                 setDocs(documents);
+            })
+            .catch((error) => {
+                console.log('Error getting documents: ', error);
             });
     };
-
-    // const { docs } = useFirestore('order');
-    // console.log(docs);
 
     const renderItem = ({ item }) => (
         <OrderCard navigation={navigation} item={item} />
@@ -83,8 +133,8 @@ const About = ({ navigation }) => {
                             <TextInput
                                 placeholderTextColor="lightgrey"
                                 style={styles.input}
-                                // value={text}
-                                // onChangeText={setText}
+                                value={user}
+                                onChangeText={setUser}
                                 placeholder="@account"
                                 keyboardType="text"
                             />

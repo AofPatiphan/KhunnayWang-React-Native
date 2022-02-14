@@ -17,7 +17,8 @@
         "ios": {
             "supportsTablet": true,
             "bundleIdentifier": "com.khunnaywang.coolapp",
-            "googleServicesFile": "./GoogleService-Info.plist"
+            "googleServicesFile": "./GoogleService-Info.plist",
+            "buildNumber": "1.0.0"
         },
         "android": {
             "adaptiveIcon": {
@@ -25,7 +26,8 @@
                 "backgroundColor": "#FFFFFF"
             },
             "package": "com.khunnaywang.coolapp",
-            "googleServicesFile": "./google-services.json"
+            "googleServicesFile": "./google-services.json",
+            "versionCode": 1
         },
         "web": {
             "favicon": "./assets/favicon.png"
